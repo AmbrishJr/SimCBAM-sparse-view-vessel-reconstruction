@@ -1,0 +1,12 @@
+torch>=2.0
+numpy
+Pillow
+scikit-image
+scipy
+matplotlib
+pandas
+seaborn
+scikit-learn
+gradio
+pyyaml
+tqdm

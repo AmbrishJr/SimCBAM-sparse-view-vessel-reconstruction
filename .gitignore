@@ -1,0 +1,35 @@
+# Data and checkpoints are user-provided (see README)
+data/
+checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Env
+.env
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Gradio
+*.gradio/
+
+# Evaluation outputs
+outputs/

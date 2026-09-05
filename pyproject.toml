@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sparse-pa-unet"
+version = "0.1.0"
+description = "Photoacoustic sparse-view reconstruction with attention-enhanced U-Net variants"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "torch>=2.0",
+    "numpy",
+    "Pillow",
+    "scikit-image",
+    "scipy",
+    "matplotlib",
+    "pandas",
+    "seaborn",
+    "scikit-learn",
+    "gradio",
+    "pyyaml",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+sparse-pa-train = "sparse_pa_unet.train:main"
+sparse-pa-evaluate = "sparse_pa_unet.evaluate:main"
+sparse-pa-demo = "sparse_pa_unet.gradio_demo:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+sparse_pa_unet = ["../configs/*.yaml"]
