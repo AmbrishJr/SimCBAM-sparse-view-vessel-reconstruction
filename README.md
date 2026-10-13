@@ -1,5 +1,7 @@
 # SimCBAM: attention U-Nets for sparse-view vessel reconstruction
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23338018.svg)](https://doi.org/10.5281/zenodo.23338018)
+
 Code for the manuscript
 
 > A. Sivaprakash and U. M. Rajagopalan, *Comparative Evaluation of Attention-Enhanced U-Net Models for
@@ -245,3 +247,22 @@ The code is released under the [MIT licence](LICENSE). The vessel image dataset 
 ## Citation
 
 If you use this code, please cite the manuscript above (full reference to be added on publication) and Tong et al. (2020) for the dataset.
+
+The version of the code used for the manuscript is release
+[`v1.0-manuscript`](https://github.com/AmbrishJr/SimCBAM-sparse-view-vessel-reconstruction/tree/v1.0-manuscript)
+(commit `af404e5`), archived on Zenodo:
+
+> A. Sivaprakash and U. M. Rajagopalan. *SimCBAM-sparse-view-vessel-reconstruction*, v1.0-manuscript (2026).
+> Zenodo. https://doi.org/10.5281/zenodo.23338018
+
+```bibtex
+@software{sivaprakash_simcbam_2026,
+  author    = {Sivaprakash, Ambrish and Rajagopalan, Uma Maheswari},
+  title     = {{SimCBAM-sparse-view-vessel-reconstruction}},
+  version   = {v1.0-manuscript},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.23338018},
+  url       = {https://doi.org/10.5281/zenodo.23338018}
+}
+```
