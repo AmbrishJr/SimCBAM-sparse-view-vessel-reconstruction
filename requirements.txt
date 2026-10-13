@@ -1,12 +1,13 @@
-torch>=2.0
-numpy
-Pillow
-scikit-image
-scipy
-matplotlib
-pandas
-seaborn
-scikit-learn
-gradio
-pyyaml
-tqdm
+# Environment used for the v3 runs (Python 3.10.14).
+# If the final runs are made on a different machine, replace these pins with the versions
+# recorded in results/report.txt ("torch" column) and `pip freeze` on that machine.
+torch==2.13.0
+numpy==2.2.6
+scipy==1.15.3
+scikit-image==0.25.2
+pandas==2.3.3
+matplotlib==3.10.8
+Pillow==11.3.0
+tqdm==4.70.0
+# notebook only
+jupyter

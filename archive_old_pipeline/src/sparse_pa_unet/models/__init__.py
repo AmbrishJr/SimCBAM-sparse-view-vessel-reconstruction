@@ -1,4 +1,3 @@
-from sparse_pa_unet.models.sparsity_classifier import SparsityClassifier
 from sparse_pa_unet.models.unet import UNet
 from sparse_pa_unet.models.unet_cbam import UNet_CBAM
 from sparse_pa_unet.models.unet_se import UNet_SE
@@ -11,7 +10,6 @@ __all__ = [
     "UNet_CBAM",
     "UNet_SimAM",
     "UNet_SimCBAM",
-    "SparsityClassifier",
 ]
 
 MODEL_REGISTRY = {

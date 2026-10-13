@@ -2,7 +2,6 @@ import torch
 
 from sparse_pa_unet.models import (
     MODEL_REGISTRY,
-    SparsityClassifier,
     UNet,
     UNet_CBAM,
     UNet_SE,
@@ -29,12 +28,6 @@ def test_model_registry():
         out = cls(in_ch=1, out_ch=1, base=32)(x)
         assert out.shape == x.shape
         assert list(cls().__dict__.keys())
-
-
-def test_sparsity_classifier_forward():
-    m = SparsityClassifier(num_classes=3)
-    out = m(_make_input(2))
-    assert out.shape == (2, 3), f"expected (2,3), got {out.shape}"
 
 
 def test_state_dict_roundtrip():

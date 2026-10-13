@@ -1,3 +1,6 @@
+import os
+
+import torch
 import torch.nn as nn
 
 
@@ -25,3 +28,13 @@ class SparsityClassifier(nn.Module):
 
     def forward(self, x):
         return self.classifier(self.features(x))
+
+def load_sparsity_classifier(path=None, device=None):
+    device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    if path is None:
+        from sparse_pa_unet.config import load_config
+        path = os.path.join(load_config()["checkpoints"]["root"], "sparsity_classifier.pth")
+    model = SparsityClassifier().to(device)
+    model.load_state_dict(torch.load(path, map_location=device))
+    model.eval()
+    return model

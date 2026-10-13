@@ -4,7 +4,7 @@ import numpy as np
 import torch
 
 from sparse_pa_unet.config import load_config
-from sparse_pa_unet.models import MODEL_NAMES, SparsityClassifier, get_model_class
+from sparse_pa_unet.models import MODEL_NAMES, get_model_class
 
 CHECKPOINT_TEMPLATE = "{name}_unet_sparse{sparsity}.pth"
 
@@ -90,12 +90,3 @@ def load_all_models(ckpt_dir=None, device=None):
             models_by_sparsity[sparsity][display] = load_model(get_model_class(key), path, device)
     return models_by_sparsity
 
-
-def load_sparsity_classifier(path=None, device=None):
-    device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    if path is None:
-        path = os.path.join(load_config()["checkpoints"]["root"], "sparsity_classifier.pth")
-    model = SparsityClassifier().to(device)
-    model.load_state_dict(torch.load(path, map_location=device))
-    model.eval()
-    return model

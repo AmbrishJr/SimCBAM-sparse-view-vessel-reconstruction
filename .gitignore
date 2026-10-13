@@ -1,35 +1,55 @@
-# Data and checkpoints are user-provided (see README)
+# ---- Data: third-party, never committed (see README "Dataset") ----
 data/
-checkpoints/
+runs/
+*.npy
+*.npz
+*.tif
+*.tiff
+*.tar
+*.tar.gz
+*.zip
 
-# Python
+# ---- Model weights: too large for git; publish via a release / Zenodo if needed ----
+checkpoints/
+ckpt/
+*.pth
+*.pt
+*.ckpt
+
+# ---- Generated outputs (results/ CSVs and figures/ ARE committed) ----
+outputs/
+train_log.txt
+*.tmp
+
+# ---- Python ----
 __pycache__/
 *.py[cod]
-*$py.class
 *.egg-info/
-*.egg
 build/
 dist/
 .eggs/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Env
-.env
-.venv/
-venv/
-
-# OS
-.DS_Store
-
-# Tests / coverage
 .pytest_cache/
 .coverage
 htmlcov/
 
-# Gradio
-*.gradio/
+# ---- Notebooks ----
+.ipynb_checkpoints/
 
-# Evaluation outputs
-outputs/
+# ---- Environments / secrets ----
+.env
+.env.*
+.venv/
+venv/
+*.pem
+*.key
+credentials*.json
+token*.json
+
+# ---- Editors / OS ----
+.vscode/
+.idea/
+.DS_Store
+
+# ---- Gradio demo cache ----
+.gradio/
+*.gradio/

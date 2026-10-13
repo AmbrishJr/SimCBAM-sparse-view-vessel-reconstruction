@@ -12,9 +12,9 @@ from sparse_pa_unet.inference import (
     MODEL_PARAM_COST,
     is_likely_vessel_image,
     load_all_models,
-    load_sparsity_classifier,
     recommend_model,
 )
+from sparsity_classifier import load_sparsity_classifier
 
 device = None
 models_by_sparsity = None
