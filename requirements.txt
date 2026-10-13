@@ -1,13 +1,14 @@
-# Environment used for the v3 runs (Python 3.10.14).
-# If the final runs are made on a different machine, replace these pins with the versions
-# recorded in results/report.txt ("torch" column) and `pip freeze` on that machine.
-torch==2.13.0
-numpy==2.2.6
-scipy==1.15.3
+# Versions from the Google Colab runtime (Python 3.13.15, CUDA 13.0 build of torch 2.11.0).
+# The torch version recorded for each run is also stored in results/v3_*_seed*.json and results/report.txt.
+# For a CUDA install outside Colab, choose the matching wheel at https://pytorch.org/get-started/locally/
+torch==2.11.0
+numpy==2.1.3
+scipy==1.16.3
 scikit-image==0.25.2
-pandas==2.3.3
-matplotlib==3.10.8
-Pillow==11.3.0
-tqdm==4.70.0
+pandas==2.2.3
+# not pinned (version not recorded from the Colab runtime; not expected to affect results)
+matplotlib
+Pillow
+tqdm
 # notebook only
 jupyter

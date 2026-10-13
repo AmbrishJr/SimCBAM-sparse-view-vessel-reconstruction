@@ -116,21 +116,113 @@ slightly at the floating-point level. Variation between training runs is reporte
 
 ## Results
 
+**Summary.** SE-U-Net gave the highest mean PSNR and SSIM at all three sampling levels: +0.55, +0.92
+and +1.11 dB PSNR over the baseline U-Net at 32, 64 and 96 angles. SimCBAM-U-Net showed no advantage over the baseline. Its PSNR differed by 0.00 to −0.08 dB, and its SSIM was slightly lower at every sampling level. These
+differences come from a simplified Radon/FBP task and do not establish a generally better attention mechanism.
+
+**How the results were produced.** All runs (seeds 0, 1 and 2) and the cost measurements were made on
+Google Colab with an NVIDIA Tesla T4 GPU (software versions: `requirements.txt`). They used the Colab variant of the
+notebook, whose training code is identical to `notebooks/SimCBAM_v3.ipynb`; only the data and output paths differ.
+Per-run results, including the per-image PSNR/SSIM values used for the paired tests, are in
+`results/v3_*_seed*.json`.
+
 The tables below are generated from the CSV files in `results/` by `scripts/make_readme_tables.py`.
 Do not edit them by hand.
 
 <!-- RESULTS:START -->
 ### Reconstruction quality (test set)
 
-_Pending: `summary_table.csv` not found. Run `python simcbam_train.py --out runs/v3 --seeds 0 1 2 --report` and copy the file into `results/`._
+| Angles | Model | PSNR (dB) | SSIM | Extra params vs Baseline | Mean best epoch |
+|---|---|---|---|---|---|
+| 32 | Baseline | 26.53 ± 0.08 | 0.9417 ± 0.0042 | 0 | 20.0 |
+| 32 | SE | 27.08 ± 0.06 | 0.9497 ± 0.0005 | 13,568 | 20.3 |
+| 32 | CBAM | 26.72 ± 0.20 | 0.9446 ± 0.0011 | 14,254 | 25.7 |
+| 32 | SimAM | 26.22 ± 0.02 | 0.9297 ± 0.0093 | 0 | 16.3 |
+| 32 | SimCBAM | 26.53 ± 0.11 | 0.9409 ± 0.0010 | 686 | 20.3 |
+| 64 | Baseline | 35.22 ± 0.19 | 0.9741 ± 0.0006 | 0 | 29.0 |
+| 64 | SE | 36.15 ± 0.25 | 0.9751 ± 0.0003 | 13,568 | 29.3 |
+| 64 | CBAM | 35.14 ± 0.17 | 0.9723 ± 0.0006 | 14,254 | 29.3 |
+| 64 | SimAM | 35.13 ± 0.07 | 0.9727 ± 0.0012 | 0 | 25.7 |
+| 64 | SimCBAM | 35.14 ± 0.20 | 0.9717 ± 0.0009 | 686 | 29.0 |
+| 96 | Baseline | 38.82 ± 0.70 | 0.9775 ± 0.0020 | 0 | 29.0 |
+| 96 | SE | 39.93 ± 0.23 | 0.9793 ± 0.0005 | 13,568 | 29.0 |
+| 96 | CBAM | 39.34 ± 0.11 | 0.9777 ± 0.0005 | 14,254 | 29.0 |
+| 96 | SimAM | 39.27 ± 0.13 | 0.9779 ± 0.0005 | 0 | 29.3 |
+| 96 | SimCBAM | 38.74 ± 0.28 | 0.9760 ± 0.0016 | 686 | 28.0 |
+
+Mean ± SD across 3 training seed(s); each value is the mean over the 200 test images, evaluated with the best-validation-loss checkpoint and outputs clipped to [0, 1].
 
 ### Statistical comparison
 
-_Pending: `paired_tests.csv` not found. Run `python simcbam_train.py --out runs/v3 --seeds 0 1 2 --report` and copy the file into `results/`._
+<details>
+<summary>Paired comparisons (click to expand)</summary>
+
+| Reference | Metric | Angles | Model | Mean Δ [95% CI] | Median Δ | p (Holm) |
+|---|---|---|---|---|---|---|
+| Baseline | PSNR | 32 | SE | +0.550 [+0.502, +0.601] | +0.490 | 1.13e-33 |
+| Baseline | PSNR | 32 | CBAM | +0.186 [+0.149, +0.226] | +0.163 | 7.76e-16 |
+| Baseline | PSNR | 32 | SimAM | -0.314 [-0.345, -0.281] | -0.303 | 1.01e-31 |
+| Baseline | PSNR | 32 | SimCBAM | -0.001 [-0.034, +0.034] | -0.002 | 0.946 |
+| Baseline | PSNR | 64 | SE | +0.924 [+0.872, +0.975] | +0.880 | 5.74e-34 |
+| Baseline | PSNR | 64 | CBAM | -0.081 [-0.135, -0.027] | -0.074 | 0.00637 |
+| Baseline | PSNR | 64 | SimAM | -0.088 [-0.141, -0.033] | -0.064 | 0.00457 |
+| Baseline | PSNR | 64 | SimCBAM | -0.078 [-0.138, -0.016] | -0.055 | 0.0334 |
+| Baseline | PSNR | 96 | SE | +1.107 [+1.063, +1.153] | +1.111 | 5.74e-34 |
+| Baseline | PSNR | 96 | CBAM | +0.526 [+0.471, +0.582] | +0.520 | 2.85e-30 |
+| Baseline | PSNR | 96 | SimAM | +0.446 [+0.380, +0.509] | +0.494 | 3.52e-24 |
+| Baseline | PSNR | 96 | SimCBAM | -0.078 [-0.152, -0.007] | -0.042 | 0.248 |
+| Baseline | SSIM | 32 | SE | +0.0081 [+0.0070, +0.0093] | +0.0057 | 5.41e-33 |
+| Baseline | SSIM | 32 | CBAM | +0.0030 [+0.0016, +0.0044] | +0.0022 | 7.31e-10 |
+| Baseline | SSIM | 32 | SimAM | -0.0120 [-0.0153, -0.0088] | -0.0075 | 5.91e-24 |
+| Baseline | SSIM | 32 | SimCBAM | -0.0007 [-0.0018, +0.0004] | -0.0020 | 0.000554 |
+| Baseline | SSIM | 64 | SE | +0.0010 [+0.0005, +0.0014] | +0.0010 | 1.41e-18 |
+| Baseline | SSIM | 64 | CBAM | -0.0018 [-0.0025, -0.0012] | -0.0011 | 2.07e-15 |
+| Baseline | SSIM | 64 | SimAM | -0.0014 [-0.0020, -0.0009] | -0.0013 | 3.31e-16 |
+| Baseline | SSIM | 64 | SimCBAM | -0.0024 [-0.0030, -0.0018] | -0.0023 | 1.69e-23 |
+| Baseline | SSIM | 96 | SE | +0.0018 [+0.0015, +0.0021] | +0.0012 | 4.7e-29 |
+| Baseline | SSIM | 96 | CBAM | +0.0002 [-0.0006, +0.0009] | +0.0001 | 0.0152 |
+| Baseline | SSIM | 96 | SimAM | +0.0005 [+0.0001, +0.0009] | -0.0000 | 0.167 |
+| Baseline | SSIM | 96 | SimCBAM | -0.0014 [-0.0018, -0.0011] | -0.0018 | 2.34e-13 |
+| CBAM | PSNR | 32 | Baseline | -0.186 [-0.226, -0.148] | -0.163 | 3.88e-16 |
+| CBAM | PSNR | 32 | SE | +0.363 [+0.320, +0.409] | +0.299 | 1.22e-30 |
+| CBAM | PSNR | 32 | SimAM | -0.500 [-0.538, -0.463] | -0.464 | 1.8e-33 |
+| CBAM | PSNR | 32 | SimCBAM | -0.187 [-0.226, -0.146] | -0.188 | 2.9e-16 |
+| CBAM | PSNR | 64 | Baseline | +0.081 [+0.025, +0.134] | +0.074 | 0.00956 |
+| CBAM | PSNR | 64 | SE | +1.005 [+0.943, +1.063] | +0.963 | 5.74e-34 |
+| CBAM | PSNR | 64 | SimAM | -0.007 [-0.075, +0.058] | +0.028 | 0.954 |
+| CBAM | PSNR | 64 | SimCBAM | +0.003 [-0.061, +0.066] | +0.048 | 0.26 |
+| CBAM | PSNR | 96 | Baseline | -0.526 [-0.579, -0.472] | -0.520 | 2.85e-30 |
+| CBAM | PSNR | 96 | SE | +0.581 [+0.536, +0.631] | +0.587 | 5.66e-33 |
+| CBAM | PSNR | 96 | SimAM | -0.080 [-0.147, -0.018] | -0.044 | 0.0369 |
+| CBAM | PSNR | 96 | SimCBAM | -0.604 [-0.673, -0.536] | -0.540 | 9.22e-30 |
+| CBAM | SSIM | 32 | Baseline | -0.0030 [-0.0042, -0.0017] | -0.0022 | 3.66e-10 |
+| CBAM | SSIM | 32 | SE | +0.0051 [+0.0042, +0.0061] | +0.0037 | 3.19e-32 |
+| CBAM | SSIM | 32 | SimAM | -0.0149 [-0.0182, -0.0121] | -0.0084 | 6.58e-34 |
+| CBAM | SSIM | 32 | SimCBAM | -0.0037 [-0.0043, -0.0030] | -0.0039 | 7.78e-27 |
+| CBAM | SSIM | 64 | Baseline | +0.0018 [+0.0012, +0.0025] | +0.0011 | 6.2e-15 |
+| CBAM | SSIM | 64 | SE | +0.0028 [+0.0024, +0.0032] | +0.0021 | 6.22e-32 |
+| CBAM | SSIM | 64 | SimAM | +0.0004 [-0.0003, +0.0011] | -0.0001 | 0.262 |
+| CBAM | SSIM | 64 | SimCBAM | -0.0006 [-0.0009, -0.0003] | -0.0010 | 2.09e-05 |
+| CBAM | SSIM | 96 | Baseline | -0.0002 [-0.0008, +0.0006] | -0.0001 | 0.00911 |
+| CBAM | SSIM | 96 | SE | +0.0016 [+0.0010, +0.0025] | +0.0009 | 5.39e-26 |
+| CBAM | SSIM | 96 | SimAM | +0.0003 [-0.0004, +0.0012] | -0.0001 | 0.00911 |
+| CBAM | SSIM | 96 | SimCBAM | -0.0016 [-0.0023, -0.0007] | -0.0020 | 2.46e-27 |
+
+Paired over the 200 test images (per-image values averaged over seeds). Δ = model − reference. CI: bootstrap (2000 resamples) of the mean difference; p: Wilcoxon signed-rank test (median difference), Holm-corrected within each angle × metric × reference group.
+
+</details>
 
 ### Computational cost
 
-_Pending: `cost.csv` not found. Run `python simcbam_train.py --out runs/v3 --cost` and copy the file into `results/`._
+| Model | GFLOPs | Latency (ms) | Peak GPU memory (MB) |
+|---|---|---|---|
+| Baseline | 4.591 | 2.71 | 38.9 |
+| SE | 4.591 | 3.42 | 39.8 |
+| CBAM | 4.599 | 5.39 | 41.3 |
+| SimAM | 4.591 | 3.32 | 43.7 |
+| SimCBAM | 4.599 | 4.48 | 43.0 |
+
+Single 1×1×128×128 input, batch 1, mean of 200 forward passes after 30 warm-up passes. FLOPs count convolution / linear layers only (element-wise attention operations are not counted).
 <!-- RESULTS:END -->
 
 ## Earlier pipeline (archived)
